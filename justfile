@@ -23,3 +23,6 @@ clean:
   rm -rf .pytest_cache/
   rm -rf .mypy_cache/
   find . -maxdepth 3 -type d -empty -print0 | xargs -0 -r rm -r
+
+hooks-update:
+  poetry run pre-commit autoupdate

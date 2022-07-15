@@ -12,10 +12,11 @@ pytest = "^7.0"
 black = "^22.1"
 pytest-parallel = "^0.1.1"
 isort = "^5.10.1"
-toml = "^0.10.2"
+tomli = { version = "^2.0.1", python = "<3.11" }
+pre-commit = "^2.20.0"
 
 [tool.poetry.scripts]
-# dochooks = "dochooks.__main__:main"
+check-whitespace-between-cn-and-en-char = "dochooks.insert_whitespace_between_cn_and_en_char.check:main"
 
 [tool.black]
 line-length = 120
