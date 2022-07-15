@@ -1,6 +1,6 @@
 import toml
 
-from pre_commit_hooks import __version__
+from dochooks import __version__
 
 with open("pyproject.toml", "r") as f:
     project_info = toml.load(f)

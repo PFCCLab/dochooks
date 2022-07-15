@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "pre_commit_hooks"
+name = "dochooks"
 version = "0.1.0"
 description = ""
 authors = ["Nyakku Shigure <sigure.qaq@gmail.com>"]
@@ -15,7 +15,7 @@ isort = "^5.10.1"
 toml = "^0.10.2"
 
 [tool.poetry.scripts]
-# pre_commit_hooks = "pre_commit_hooks.__main__:main"
+# dochooks = "dochooks.__main__:main"
 
 [tool.black]
 line-length = 120

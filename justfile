@@ -1,4 +1,4 @@
-VERSION := `poetry run python -c "import sys; from pre_commit_hooks import __version__ as version; sys.stdout.write(version)"`
+VERSION := `poetry run python -c "import sys; from dochooks import __version__ as version; sys.stdout.write(version)"`
 
 test:
   poetry run pytest --workers auto
