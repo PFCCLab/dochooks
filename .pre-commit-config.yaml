@@ -6,6 +6,7 @@ repos:
       - id: end-of-file-fixer
       - id: check-yaml
   - repo: https://github.com/ShigureLab/dochooks
-    rev: 97d63894296322f5064c05fa579f92aefad3f4f7
+    rev: b88c9f47ad85741d1b9b377a2cbefcd7f8ecc314
     hooks:
       - id: check-whitespace-between-cn-and-en-char
+      - id: insert-whitespace-between-cn-and-en-char
