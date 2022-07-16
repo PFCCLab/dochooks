@@ -46,6 +46,9 @@ def main(argv: Optional[Sequence[str]] = None) -> ReturnCode:
         print("")
         print("Snuged en and cn chars have been separated by a space. Now aborting the commit.")
         print('You can check the changes made. Then simply "git add --update ." and re-commit')
+        print(
+            "If the changes are not correct, you can @SigureMo in that PR, or directly open a issue in https://github.com/ShigureLab/dochooks"
+        )
     return ret_code
 
 
