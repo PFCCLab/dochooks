@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import sys
 
 from dochooks import __version__

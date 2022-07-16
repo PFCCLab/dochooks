@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import re
 
 from dochooks.insert_whitespace_between_cn_and_en_char.regex import (
