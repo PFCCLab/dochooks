@@ -9,4 +9,6 @@ repos:
     rev: b88c9f47ad85741d1b9b377a2cbefcd7f8ecc314
     hooks:
       - id: check-whitespace-between-cn-and-en-char
+        files: \.md$|\.rst$
       - id: insert-whitespace-between-cn-and-en-char
+        files: \.md$|\.rst$
