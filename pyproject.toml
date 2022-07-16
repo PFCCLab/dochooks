@@ -18,6 +18,7 @@ pre-commit = "^2.20.0"
 [tool.poetry.scripts]
 check-whitespace-between-cn-and-en-char = "dochooks.insert_whitespace_between_cn_and_en_char.check:main"
 insert-whitespace-between-cn-and-en-char = "dochooks.insert_whitespace_between_cn_and_en_char.format:main"
+api-doc-checker = "dochooks.api_doc_checker.check:main"
 
 [tool.black]
 line-length = 120
