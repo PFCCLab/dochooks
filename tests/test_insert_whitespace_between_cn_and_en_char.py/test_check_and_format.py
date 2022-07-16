@@ -1,11 +1,12 @@
-from dochooks.insert_whitespace_between_cn_and_en_char.format import format
-from dochooks.insert_whitespace_between_cn_and_en_char.check import check
+from __future__ import annotations
+
 import pytest
 
-from typing import Final
+from dochooks.insert_whitespace_between_cn_and_en_char.check import check
+from dochooks.insert_whitespace_between_cn_and_en_char.format import format
 
-NEED_FORMAT: Final[bool] = True
-NEEDNT_FORMAT: Final[bool] = False
+NEED_FORMAT: bool = True
+NEEDNT_FORMAT: bool = False
 
 cases: list[tuple[bool, str, str]] = [
     (NEEDNT_FORMAT, "\n", "\n"),
