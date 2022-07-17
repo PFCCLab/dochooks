@@ -3,7 +3,8 @@ from __future__ import annotations
 import re
 from typing import Pattern
 
-REGEX_IS_IDENTIFIER: Pattern[str] = re.compile(r"^[a-zA-Z_][a-zA-Z0-9_]*$")
+IDENTIFIER_PATTERN: str = r"[a-zA-Z_][a-zA-Z0-9_]*"
+REGEX_IS_IDENTIFIER: Pattern[str] = re.compile(f"^{IDENTIFIER_PATTERN}$")
 
 
 def is_valid_identifier(identifier: str) -> bool:

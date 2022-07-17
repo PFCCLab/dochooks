@@ -5,19 +5,19 @@ from .checker import Checker, Node
 
 
 class TitleChecker(Checker):
-    section_level = 0
-    titles: dict[int, list[str]] = {}
-    valid_h2_titles = [
+    VALID_H2_TITLES = [
         "参数",
         "返回",
         "属性",
         "方法",
         "代码示例",
     ]
-    required_h2_titles: list[str] = [
+    REQUIRED_H2_TITLES: list[str] = [
         "参数",
         "代码示例",
     ]
+    section_level = 0
+    titles: dict[int, list[str]] = {}
 
     def _add_title(self, level: int, title: str):
         if level not in self.titles:
@@ -31,7 +31,6 @@ class TitleChecker(Checker):
         self.section_level -= 1
 
     def visit_title(self, node: Node) -> None:
-
         self._add_title(self.section_level, node.rawsource)
 
     @property
@@ -67,14 +66,14 @@ class TitleChecker(Checker):
 
         # 确保二级标题均合法，即为允许的列表内容
         for h2_title in h2_titles:
-            if h2_title not in self.valid_h2_titles:
+            if h2_title not in self.VALID_H2_TITLES:
                 print(
-                    f"{self.source_path}: Invalid h2 title ({h2_title}) found. Allowed titles: {self.valid_h2_titles}"
+                    f"{self.source_path}: Invalid h2 title ({h2_title}) found. Allowed titles: {self.VALID_H2_TITLES}"
                 )
                 return False
 
         # 确保必须的二级标题均存在
-        for required_h2_title in self.required_h2_titles:
+        for required_h2_title in self.REQUIRED_H2_TITLES:
             if required_h2_title not in h2_titles:
                 print(f"{self.source_path}: Required h2 title ({required_h2_title}) not found.")
                 return False
