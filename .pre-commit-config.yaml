@@ -6,7 +6,7 @@ repos:
       - id: end-of-file-fixer
       - id: check-yaml
   - repo: https://github.com/ShigureLab/dochooks
-    rev: 3d2b6a2b237f066b83bed1d45ef1090357344d1a
+    rev: df3d6a3e8f2d0714fb475fbee5cb1d1250d51742
     hooks:
       - id: check-whitespace-between-cn-and-en-char
         files: \.md$|\.rst$

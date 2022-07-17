@@ -6,17 +6,15 @@ from typing import Optional, Sequence
 from dochooks import __version__
 
 from ..utils.return_code import FAIL, PASS, ReturnCode
-
-from .visitors.title_checker import TitleChecker
+from .checkers.checker import create_chained_checker
+from .checkers.title_checker import TitleChecker
 from .core.parser import parse_rst
 
 
 def check(text: str, file_path: str = "<rst-doc>") -> bool:
     rst_ast = parse_rst(text, file_path=file_path)
     # print(rst_ast.pformat())
-    checker = TitleChecker(rst_ast)
-    rst_ast.walkabout(checker)
-    check_result = checker.check()
+    check_result = create_chained_checker([TitleChecker], True).check(rst_ast)
     print("Check result:", check_result)
     return check_result
 

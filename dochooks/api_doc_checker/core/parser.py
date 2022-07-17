@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import docutils.frontend
 import docutils.nodes
 import docutils.parsers.rst

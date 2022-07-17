@@ -1,23 +1,17 @@
 from __future__ import annotations
 
-import docutils
-import docutils.nodes
-import docutils.parsers.rst
-
-from typing import Any
 from ..utils import is_valid_identifier
+from .checker import Checker, Node
 
 
-Node = Any  # docutils.nodes.Node, avoid type error
-
-
-class TitleChecker(docutils.nodes.NodeVisitor):
+class TitleChecker(Checker):
     section_level = 0
     titles: dict[int, list[str]] = {}
     valid_h2_titles = [
         "参数",
         "返回",
         "属性",
+        "方法",
         "代码示例",
     ]
     required_h2_titles: list[str] = [
@@ -40,17 +34,8 @@ class TitleChecker(docutils.nodes.NodeVisitor):
 
         self._add_title(self.section_level, node.rawsource)
 
-    def unknown_visit(self, node: Node) -> None:
-        pass
-
-    def unknown_departure(self, node: Node) -> None:
-        pass
-
     @property
-    def source_path(self) -> str:
-        return self.document.get("source")
-
-    def check(self) -> bool:
+    def result(self) -> bool:
         # 确保存在标题
         if not self.titles:
             print(f"{self.source_path}: No titles found.")
