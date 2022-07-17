@@ -14,4 +14,4 @@ repos:
         files: \.md$|\.rst$
       - id: api-doc-checker
         files: (?<!index)\.rst$
-        additional_dependencies: [".[rst]"]
+        additional_dependencies: [".[rst-parser]"]
