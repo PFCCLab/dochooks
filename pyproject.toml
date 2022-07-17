@@ -6,7 +6,7 @@ authors = ["Nyakku Shigure <sigure.qaq@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
-docutils = { version = "^0.18", optional = true }
+docutils = { version = "^0.19", optional = true }
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.0"

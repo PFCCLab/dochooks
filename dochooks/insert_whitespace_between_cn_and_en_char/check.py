@@ -11,15 +11,15 @@ from .regex import REGEX_CN_WITH_EN, REGEX_EN_WITH_CN
 
 def check(string: str) -> bool:
     if REGEX_CN_WITH_EN.search(string) or REGEX_EN_WITH_CN.search(string):
-        return True
-    return False
+        return False
+    return True
 
 
 def _check_file(file_path: str) -> ReturnCode:
     return_code = PASS
     with open(file_path, "r", encoding="utf8", newline="\n") as f:
         for lineno, line in enumerate(f, 1):
-            if check(line):
+            if not check(line):
                 print(f"No spaces between EN and CN chars detected at: {file_path}:{lineno}:\t{line}")
                 return_code = FAIL
     return return_code

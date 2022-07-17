@@ -50,12 +50,12 @@ cases: list[tuple[bool, str, str]] = [
 def test_check_and_format(need_format: bool, unformatted: str, formatted: str):
 
     if need_format:
-        assert check(unformatted)
+        assert not check(unformatted)
     else:
         assert unformatted == formatted
-        assert not check(unformatted)
+        assert check(unformatted)
 
     assert format(unformatted) == formatted
     # Test format process is stable
-    assert not check(formatted)
+    assert check(formatted)
     assert format(formatted) == formatted

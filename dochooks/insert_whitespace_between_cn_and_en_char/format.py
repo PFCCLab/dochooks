@@ -21,7 +21,7 @@ def _format_file(file_path: str) -> ReturnCode:
     formatted_text = ""
     with open(file_path, "r", encoding="utf8", newline="\n") as f:
         for lineno, line in enumerate(f, 1):
-            if check(line):
+            if not check(line):
                 line = format(line)
                 return_code = FAIL
                 print(f"Add spaces between EN and CN chars in: {file_path}:{lineno}:\t{line}")
