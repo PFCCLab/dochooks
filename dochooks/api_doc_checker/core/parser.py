@@ -17,6 +17,11 @@ def parse_rst(text: str, file_path: str) -> docutils.nodes.document:
 
     components = (docutils.parsers.rst.Parser,)
     settings = docutils.frontend.OptionParser(components=components).get_default_values()
+
+    # update settings
+    settings.report_level = 3  # Disable warnings like "Title underline too short".
+    settings.tab_width = 4
+
     document = docutils.utils.new_document(file_path, settings=settings)
     parser.parse(text, document)
     return document

@@ -42,6 +42,8 @@ class CodeExampleChecker(Checker):
                         )
                         self._check_result = False
 
+                    # TODO: 检查 `COPY-FROM` 的路径是否可导入（要注意类方法路径）
+
     @property
     def result(self) -> bool:
         return self._check_result

@@ -374,7 +374,7 @@ rst-parser = ["docutils"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "cb2fea1f6a5a33dde2cb4952c95419bfe7b01a5c761a98ea0b38ab44de299f15"
+content-hash = "857ffb2cd7317d615e6a86d894bcdc14263948d3eb27c37403d1977fb782a058"
 
 [metadata.files]
 atomicwrites = [

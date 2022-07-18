@@ -47,7 +47,6 @@ class TitleChecker(Checker):
             return False
 
         # 确保一级标题唯一
-        assert h1_titles is not None
         if len(h1_titles) > 1:
             print(f"{self.source_path}: More than one h1 title found.")
             return False
