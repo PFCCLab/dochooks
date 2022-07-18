@@ -31,7 +31,7 @@ jobs:
       - name: Install dependencies
         if: steps.poetry-cache.outputs.cache-hit != 'true'
         run: |
-          poetry install
+          poetry install -E rst-parser
 
       - name: unit test
         run: |

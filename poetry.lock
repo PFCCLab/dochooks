@@ -333,7 +333,7 @@ python-versions = ">=3.6"
 name = "typing-extensions"
 version = "4.3.0"
 description = "Backported and Experimental Type Hints for Python 3.7+"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 
@@ -374,7 +374,7 @@ rst-parser = ["docutils"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "857ffb2cd7317d615e6a86d894bcdc14263948d3eb27c37403d1977fb782a058"
+content-hash = "15b67ee2e6fb82f34e1fa7fcf67d02f0bd230e851ecd347c21510c8e204359bb"
 
 [metadata.files]
 atomicwrites = [

@@ -16,8 +16,8 @@ except ImportError:
     from typing_extensions import TypeAlias
 
 try:
-    from typing import assert_type  # type: ignore
+    from typing import TypedDict  # type: ignore
 except ImportError:
-    from typing_extensions import assert_type
+    from typing_extensions import TypedDict
 
-__all__ = ["Literal", "Final", "TypeAlias", "assert_type"]
+__all__ = ["Literal", "Final", "TypeAlias", "TypedDict"]

@@ -2,13 +2,13 @@ from __future__ import annotations
 
 import re
 
-from ..utils import IDENTIFIER_PATTERN
+from ..utils import PATTERN_IDENTIFIER
 from .checker import Checker, Node
 
 
 class CodeExampleChecker(Checker):
     CODE_EXAMPLE_SECTION_NAME = "代码示例"
-    COPY_FROM_REGEX = re.compile(rf"^COPY-FROM: {IDENTIFIER_PATTERN}(\.{IDENTIFIER_PATTERN})*(:[a-zA-Z0-9_\-]+)?$")
+    COPY_FROM_REGEX = re.compile(rf"COPY-FROM: {PATTERN_IDENTIFIER}(\.{PATTERN_IDENTIFIER})*(:[a-zA-Z0-9_\-]+)?")
 
     _check_result = True
     _section_name_stack: list[str] = []
@@ -47,7 +47,7 @@ class CodeExampleChecker(Checker):
 
         if node.tagname == "paragraph" and node.rawsource.startswith("COPY-FROM:"):
             # 检查 `COPY-FROM` 格式正确性
-            if not self.COPY_FROM_REGEX.match(node.rawsource):
+            if not self.COPY_FROM_REGEX.fullmatch(node.rawsource):
                 lineno = node.line
                 print(
                     f"{self.source_path}:{lineno}: Invalid `COPY-FROM` format. Please use `COPY-FROM: <full_API_path>`."
