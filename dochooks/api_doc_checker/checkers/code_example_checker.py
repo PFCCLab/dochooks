@@ -11,38 +11,54 @@ class CodeExampleChecker(Checker):
     COPY_FROM_REGEX = re.compile(rf"^COPY-FROM: {IDENTIFIER_PATTERN}(\.{IDENTIFIER_PATTERN})*(:[a-zA-Z0-9_\-]+)?$")
 
     _check_result = True
+    _section_name_stack: list[str] = []
 
     def visit_section(self, node: Node):
-        is_code_example_section: bool = False
-        for child in node.children:
-            if child.tagname == "title" and child.rawsource == self.CODE_EXAMPLE_SECTION_NAME:
-                is_code_example_section = True
-            if is_code_example_section:
-                # TODO: 这样的形式不支持对于深层次的检测（非子节点，而是孙子甚至更深层的节点）
-                #       因此仍然需要使用 visit 的方式来检查
+        node_names = node.get("names")
+        if node_names:
+            self._section_name_stack.append(node_names[0])
+        else:
+            self._section_name_stack.append(" <Unknown section title> ")
 
-                # 检查代码示例是否已经使用 `COPY-FROM` 替换
-                if (
-                    child.tagname == "literal_block"
-                    and child.get("is_directive") is True
-                    and child.get("directive_name") == "code-block"
-                ):
-                    lineno = child.line
-                    print(
-                        f"{self.source_path}:{lineno}: Found a code block in the code example section. Please use `COPY-FROM` instead."
-                    )
-                    self._check_result = False
+    def depart_section(self, node: Node):
+        self._section_name_stack.pop()
 
-                # 检查 `COPY-FROM` 格式正确性
-                if child.tagname == "paragraph" and child.rawsource.startswith("COPY-FROM:"):
-                    if not self.COPY_FROM_REGEX.match(child.rawsource):
-                        lineno = child.line
-                        print(
-                            f"{self.source_path}:{lineno}: Invalid `COPY-FROM` format. Please use `COPY-FROM: <full_API_path>`."
-                        )
-                        self._check_result = False
+    def visit_literal_block(self, node: Node):
+        """
+        检查示例代码块（directive code-block）
+        """
+        if not self.in_code_example_section:
+            return
 
-                    # TODO: 检查 `COPY-FROM` 的路径是否可导入（要注意类方法路径）
+        # 检查代码示例是否已经使用 `COPY-FROM` 替换
+        if node.get("is_directive") is True and node.get("directive_name") == "code-block":
+            lineno = node.line
+            print(
+                f"{self.source_path}:{lineno}: Found a code block in the code example section. Please use `COPY-FROM` instead."
+            )
+            self._check_result = False
+
+    def visit_paragraph(self, node: Node):
+        """
+        检查 COPY-FROM 段落
+        """
+        if not self.in_code_example_section:
+            return
+
+        if node.tagname == "paragraph" and node.rawsource.startswith("COPY-FROM:"):
+            # 检查 `COPY-FROM` 格式正确性
+            if not self.COPY_FROM_REGEX.match(node.rawsource):
+                lineno = node.line
+                print(
+                    f"{self.source_path}:{lineno}: Invalid `COPY-FROM` format. Please use `COPY-FROM: <full_API_path>`."
+                )
+                self._check_result = False
+
+            # TODO: 检查 `COPY-FROM` 的路径是否可导入（要注意类方法路径）
+
+    @property
+    def in_code_example_section(self) -> bool:
+        return self.CODE_EXAMPLE_SECTION_NAME in self._section_name_stack
 
     @property
     def result(self) -> bool:
