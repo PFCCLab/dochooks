@@ -25,3 +25,17 @@ repos:
           files: (?<!index)\.rst$
           additional_dependencies: [".[rst-parser]"]
 ```
+
+## Hooks
+
+### `check-whitespace-between-cn-and-en-char`
+
+用于检查中英文之间是否有空格
+
+### `insert-whitespace-between-cn-and-en-char`
+
+用于自动在中英文之间添加空格
+
+### `api-doc-checker` <sup>WIP</sup>
+
+用于检查 API 文档（reStructureText）格式，需根据规范编写
