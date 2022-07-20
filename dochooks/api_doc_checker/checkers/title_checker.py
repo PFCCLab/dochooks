@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import docutils.nodes
+
 from ..utils import is_valid_identifier
-from .checker import Checker, Node
+from .checker import Checker
 
 
 class TitleChecker(Checker):
@@ -24,13 +26,13 @@ class TitleChecker(Checker):
             self.titles[level] = []
         self.titles[level].append(title)
 
-    def visit_section(self, node: Node):
+    def visit_section(self, node: docutils.nodes.Element):
         self.section_level += 1
 
-    def depart_section(self, node: Node):
+    def depart_section(self, node: docutils.nodes.Element):
         self.section_level -= 1
 
-    def visit_title(self, node: Node) -> None:
+    def visit_title(self, node: docutils.nodes.Element) -> None:
         self._add_title(self.section_level, node.rawsource)
 
     @property

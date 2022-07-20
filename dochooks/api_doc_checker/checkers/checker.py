@@ -1,12 +1,8 @@
 from __future__ import annotations
 
-from typing import Any
-
 import docutils
 import docutils.nodes
 import docutils.parsers.rst
-
-Node = Any  # docutils.nodes.Node, avoid type error
 
 
 class Checker(docutils.nodes.NodeVisitor):
@@ -19,11 +15,11 @@ class Checker(docutils.nodes.NodeVisitor):
     result = TitleChecker.check(ast)
     """
 
-    def unknown_visit(self, node: Node) -> None:
+    def unknown_visit(self, node: docutils.nodes.Element) -> None:
         """Ensure not raise exception when visiting unknown node."""
         pass
 
-    def unknown_departure(self, node: Node) -> None:
+    def unknown_departure(self, node: docutils.nodes.Element) -> None:
         """Ensure not raise exception when leaving unknown node."""
         pass
 
@@ -36,7 +32,7 @@ class Checker(docutils.nodes.NodeVisitor):
         raise NotImplementedError()
 
     @classmethod
-    def check(cls, node: Node) -> bool:
+    def check(cls, node: docutils.nodes.document) -> bool:
         self = cls(node)
         node.walkabout(self)
         check_result = self.result
@@ -45,6 +41,9 @@ class Checker(docutils.nodes.NodeVisitor):
 
 def create_chained_checker(checkers: list[type[Checker]], abort_on_failure: bool = False) -> type[Checker]:
     """
+    建立一个实验性的 Chainer，将各个顺序执行的 checker 合并到一起
+    这样 log 就会按照解析顺序打印，而不是按照 checker 顺序打印，阅读体验更友好些
+
     class TitleChecker(Checker):
         ...
 
@@ -61,15 +60,15 @@ def create_chained_checker(checkers: list[type[Checker]], abort_on_failure: bool
         checker_classes: list[type[Checker]] = []
         checker_instances: list[Checker]
 
-        def __init__(self, node: Node) -> None:
+        def __init__(self, node: docutils.nodes.document) -> None:
             super().__init__(node)
             self.checker_instances = [checker(node) for checker in self.checker_classes]
 
-        def dispatch_visit(self, node: Node) -> None:
+        def dispatch_visit(self, node: docutils.nodes.Element) -> None:
             for checker in self.checker_instances:
                 checker.dispatch_visit(node)
 
-        def dispatch_departure(self, node: Node) -> None:
+        def dispatch_departure(self, node: docutils.nodes.Element) -> None:
             for checker in self.checker_instances:
                 checker.dispatch_departure(node)
 
@@ -93,3 +92,12 @@ def create_chained_checker(checkers: list[type[Checker]], abort_on_failure: bool
     for checker in checkers:
         chain.add_checker(checker)
     return chain
+
+
+def assert_is_element(node: docutils.nodes.Node):
+    """Assert node is a docutils.nodes.Element.
+    由于 Element.children 的类型继承了 Node 下该属性的 list[docutils.nodes.Node]，
+    子元素明明是 Element 却会报类型错误，这只是一个临时解决方案
+    """
+    assert isinstance(node, docutils.nodes.Element)
+    return node

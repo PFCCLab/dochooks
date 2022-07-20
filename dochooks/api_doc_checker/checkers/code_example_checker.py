@@ -2,8 +2,10 @@ from __future__ import annotations
 
 import re
 
+import docutils.nodes
+
 from ..utils import PATTERN_IDENTIFIER
-from .checker import Checker, Node
+from .checker import Checker
 
 
 class CodeExampleChecker(Checker):
@@ -13,17 +15,17 @@ class CodeExampleChecker(Checker):
     _check_result = True
     _section_name_stack: list[str] = []
 
-    def visit_section(self, node: Node):
+    def visit_section(self, node: docutils.nodes.Element):
         node_names = node.get("names")
         if node_names:
             self._section_name_stack.append(node_names[0])
         else:
             self._section_name_stack.append(" <Unknown section title> ")
 
-    def depart_section(self, node: Node):
+    def depart_section(self, node: docutils.nodes.Element):
         self._section_name_stack.pop()
 
-    def visit_literal_block(self, node: Node):
+    def visit_literal_block(self, node: docutils.nodes.Element):
         """
         检查示例代码块（directive code-block）
         """
@@ -38,7 +40,7 @@ class CodeExampleChecker(Checker):
             )
             self._check_result = False
 
-    def visit_paragraph(self, node: Node):
+    def visit_paragraph(self, node: docutils.nodes.Element):
         """
         检查 COPY-FROM 段落
         """

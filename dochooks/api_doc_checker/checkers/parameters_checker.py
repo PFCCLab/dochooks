@@ -3,9 +3,11 @@ from __future__ import annotations
 import re
 from typing import Optional
 
+import docutils.nodes
+
 from ..._compat import Literal, TypedDict
 from ..utils import PATTERN_IDENTIFIER, is_valid_identifier
-from .checker import Checker, Node
+from .checker import Checker, assert_is_element
 
 APIType = Literal["class", "function", ""]
 
@@ -38,7 +40,7 @@ class ParametersChecker(Checker):
 
     # TODO: 直接抽取函数声明来检查
 
-    def visit_literal_block(self, node: Node):
+    def visit_literal_block(self, node: docutils.nodes.Element):
         """首先获取 API 的声明
         也即 .. py:function:: API_NAME(...) 或者 .. py:class:: API_NAME(...)
         """
@@ -70,17 +72,17 @@ class ParametersChecker(Checker):
             self._api_name = api_name
             self._api_parameters = api_parameters
 
-    def visit_section(self, node: Node):
+    def visit_section(self, node: docutils.nodes.Element):
         node_names = node.get("names")
         if node_names:
             self._section_name_stack.append(node_names[0])
         else:
             self._section_name_stack.append(" <Unknown section title> ")
 
-    def depart_section(self, node: Node):
+    def depart_section(self, node: docutils.nodes.Element):
         self._section_name_stack.pop()
 
-    def _extract_parameter_info_from_list_item(self, node: Node) -> Optional[APIParameter]:
+    def _extract_parameter_info_from_list_item(self, node: docutils.nodes.Element) -> Optional[APIParameter]:
         """对单行信息进行提取并检查"""
 
         doc_parameter: APIParameter = APIParameter(
@@ -91,7 +93,8 @@ class ParametersChecker(Checker):
             optional=False,
             default=None,
         )
-        paragraph = node.children[0]
+        node.children
+        paragraph = assert_is_element(node.children[0])
 
         # 确保包含 paragraph
         if paragraph.tagname != "paragraph" or not paragraph.children:
@@ -100,8 +103,10 @@ class ParametersChecker(Checker):
             return None
 
         # 确保参数的名称是加粗的（strong tag）
-        if paragraph.children[0].tagname != "strong":
-            print(f"{self.source_path}:{node.line}: Expected a strong, but got {paragraph.children[0].tagname}.")
+        if assert_is_element(paragraph.children[0]).tagname != "strong":
+            print(
+                f"{self.source_path}:{node.line}: Expected a strong, but got {assert_is_element(paragraph.children[0]).tagname}."
+            )
             self._check_result = False
             return None
 
@@ -152,14 +157,16 @@ class ParametersChecker(Checker):
 
         return doc_parameter
 
-    def visit_bullet_list(self, node: Node):
+    def visit_bullet_list(self, node: docutils.nodes.Element):
         """
         检查参数列表，通过 _extract_parameter_info_from_list_item 得到的单行结果，结合声明进行全局检查
         """
         if not self.in_parameters_section:
             return
 
-        doc_parameters = [self._extract_parameter_info_from_list_item(list_item) for list_item in node.children]
+        doc_parameters = [
+            self._extract_parameter_info_from_list_item(assert_is_element(list_item)) for list_item in node.children
+        ]
         # 检查参数个数是否一致
         if len(self._api_parameters) != len(doc_parameters):
             print(

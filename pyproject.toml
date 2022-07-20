@@ -8,6 +8,7 @@ authors = ["Nyakku Shigure <sigure.qaq@gmail.com>"]
 python = "^3.7"
 typing-extensions = { version = "^4.3.0", python = "<3.11" }
 docutils = { version = "^0.19", optional = true }
+httpx = "^0.23.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.0"
@@ -16,6 +17,8 @@ pytest-parallel = "^0.1.1"
 isort = "^5.10.1"
 tomli = { version = "^2.0.1", python = "<3.11" }
 pre-commit = "^2.20.0"
+types-docutils = "^0.19.0"
+httpx = {extras = ["socks"], version = "^0.23.0"}
 
 [tool.poetry.extras]
 rst-parser = ["docutils"]

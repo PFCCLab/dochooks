@@ -8,6 +8,7 @@ from dochooks import __version__
 from ..utils.return_code import FAIL, PASS, ReturnCode
 from .checkers import (
     CodeExampleChecker,
+    DeadLinkChecker,
     ParametersChecker,
     TitleChecker,
     create_chained_checker,
@@ -18,7 +19,15 @@ from .core.parser import parse_rst
 def check(text: str, file_path: str = "<rst-doc>") -> bool:
     rst_ast = parse_rst(text, file_path=file_path)
     # print(rst_ast.pformat())
-    check_result = create_chained_checker([TitleChecker, CodeExampleChecker, ParametersChecker], True).check(rst_ast)
+    check_result = create_chained_checker(
+        [
+            TitleChecker,
+            CodeExampleChecker,
+            ParametersChecker,
+            DeadLinkChecker,
+        ],
+        False,
+    ).check(rst_ast)
     print("Check result:", check_result)
     return check_result
 

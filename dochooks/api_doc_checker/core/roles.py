@@ -110,7 +110,7 @@ SPHINX_DOMAIN_ROLES = [
 ]
 
 # https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html
-SPHINX_EXT_AUTODOC_ROLES = []
+SPHINX_EXT_AUTODOC_ROLES: list[str] = []
 
 RoleFn = Callable[
     [
