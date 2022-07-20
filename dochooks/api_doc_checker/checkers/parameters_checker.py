@@ -13,8 +13,8 @@ APIType = Literal["class", "function", ""]
 class APIParameter(TypedDict):
     name: str
     type: Optional[str]
-    is_args: bool
-    is_kwargs: bool
+    is_rest: bool
+    is_keyword: bool
     optional: bool
     default: Optional[str]
 
@@ -86,8 +86,8 @@ class ParametersChecker(Checker):
         doc_parameter: APIParameter = APIParameter(
             name="",
             type=None,
-            is_args=False,
-            is_kwargs=False,
+            is_rest=False,
+            is_keyword=False,
             optional=False,
             default=None,
         )
@@ -107,11 +107,11 @@ class ParametersChecker(Checker):
 
         parameter_name: str = paragraph.children[0].astext()
         if parameter_name.startswith("**"):
-            doc_parameter["is_kwargs"] = True
+            doc_parameter["is_keyword"] = True
             parameter_name = parameter_name[2:]
 
         if parameter_name.startswith("*"):
-            doc_parameter["is_args"] = True
+            doc_parameter["is_rest"] = True
             parameter_name = parameter_name[1:]
 
         # 确保参数的名称是合法的标识符
@@ -215,8 +215,8 @@ def parse_api_name_and_parameters(api_declaration: str) -> tuple[Optional[str], 
         api_parameter: APIParameter = APIParameter(
             name="",
             type=None,
-            is_args=False,
-            is_kwargs=False,
+            is_rest=False,
+            is_keyword=False,
             optional=False,
             default=None,
         )
@@ -235,12 +235,12 @@ def parse_api_name_and_parameters(api_declaration: str) -> tuple[Optional[str], 
             api_parameter["type"] = api_parameter_type
 
         if api_parameter_str.startswith("**"):
-            api_parameter["is_kwargs"] = True
+            api_parameter["is_keyword"] = True
             api_parameter["optional"] = True
             api_parameter_str = api_parameter_str[2:]
 
         if api_parameter_str.startswith("*"):
-            api_parameter["is_args"] = True
+            api_parameter["is_rest"] = True
             api_parameter["optional"] = True
             api_parameter_str = api_parameter_str[1:]
 
