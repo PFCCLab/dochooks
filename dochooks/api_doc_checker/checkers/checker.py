@@ -94,10 +94,15 @@ def create_chained_checker(checkers: list[type[Checker]], abort_on_failure: bool
     return chain
 
 
-def assert_is_element(node: docutils.nodes.Node):
+def assert_is_element(node: docutils.nodes.Node) -> docutils.nodes.Element:
     """Assert node is a docutils.nodes.Element.
+
     由于 Element.children 的类型继承了 Node 下该属性的 list[docutils.nodes.Node]，
     子元素明明是 Element 却会报类型错误，这只是一个临时解决方案
+
+    不使用 TypeGuard（PEP 647）是因为这是一件确定的事情，不需要进行判断
+
+    另外不使用`assert isinstance(node, docutils.nodes.Element)` 也是同样的，我们
+    不需要额外引入运行时开销
     """
-    assert isinstance(node, docutils.nodes.Element)
-    return node
+    return node  # type: ignore
