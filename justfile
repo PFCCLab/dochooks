@@ -11,6 +11,9 @@ fmt:
 fmt-docs:
   prettier --write '**/*.md'
 
+lint:
+  poetry run pyright dochooks tests
+
 build:
   poetry build
 
