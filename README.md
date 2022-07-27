@@ -15,7 +15,7 @@ Some pre-commit hooks for docs.
 ```yaml
 repos:
    - repo: https://github.com/ShigureLab/dochooks
-     rev: v0.2.0
+     rev: v0.3.0
      hooks:
         - id: check-whitespace-between-cn-and-en-char
           files: \.md$|\.rst$
