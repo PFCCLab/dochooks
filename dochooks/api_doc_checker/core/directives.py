@@ -161,7 +161,6 @@ def create_custom_directive(directive_name: str) -> type[docutils.parsers.rst.Di
     """
 
     class _CustomDirective(docutils.parsers.rst.Directive):
-
         has_content = True
 
         def run(self):

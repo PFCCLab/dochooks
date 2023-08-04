@@ -7,28 +7,22 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11-dev"]
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12-dev"]
         architecture: ["x64"]
     name: Python ${{ matrix.python-version }} on ${{ matrix.architecture }} test
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Install poetry
+        run: pipx install poetry
+
       - name: Install python
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
           architecture: ${{ matrix.architecture }}
-
-      - name: Install poetry
-        uses: snok/install-poetry@v1
-
-      - uses: actions/cache@v3
-        id: poetry-cache
-        with:
-          path: |
-            **/.venv
-          key: ${{ runner.os }}-${{ matrix.python-version }}-${{ matrix.architecture }}-poetry-${{ hashFiles('poetry.lock') }}
+          cache: "poetry"
 
       - name: Install dependencies
         if: steps.poetry-cache.outputs.cache-hit != 'true'
@@ -37,4 +31,4 @@ jobs:
 
       - name: unit test
         run: |
-          poetry run pytest --workers auto
+          poetry run pytest

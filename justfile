@@ -1,7 +1,7 @@
 VERSION := `poetry run python -c "import sys; from dochooks import __version__ as version; sys.stdout.write(version)"`
 
 test:
-  poetry run pytest --workers auto
+  poetry run pytest
   just clean
 
 fmt:

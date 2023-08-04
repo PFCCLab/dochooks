@@ -48,7 +48,6 @@ cases: list[tuple[bool, str, str]] = [
 
 @pytest.mark.parametrize("need_format, unformatted, formatted", cases)
 def test_check_and_format(need_format: bool, unformatted: str, formatted: str):
-
     if need_format:
         assert not check(unformatted)
     else:

@@ -18,7 +18,6 @@ class DeadLinkChecker(Checker):
     _links: list[tuple[Optional[int], str]] = []
 
     def visit_reference(self, node: docutils.nodes.Element):
-
         uri = node.get("refuri")
         self._links.append((node.line, uri))
 
