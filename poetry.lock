@@ -195,18 +195,19 @@ socks = ["socksio (==1.*)"]
 
 [[package]]
 name = "httpx"
-version = "0.25.0"
+version = "0.25.1"
 description = "The next generation HTTP client."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "httpx-0.25.0-py3-none-any.whl", hash = "sha256:181ea7f8ba3a82578be86ef4171554dd45fec26a02556a744db029a0a27b7100"},
-    {file = "httpx-0.25.0.tar.gz", hash = "sha256:47ecda285389cb32bb2691cc6e069e3ab0205956f681c5b2ad2325719751d875"},
+    {file = "httpx-0.25.1-py3-none-any.whl", hash = "sha256:fec7d6cc5c27c578a391f7e87b9aa7d3d8fbcd034f6399f9f79b45bcc12a866a"},
+    {file = "httpx-0.25.1.tar.gz", hash = "sha256:ffd96d5cf901e63863d9f1b4b6807861dbea4d301613415d9e6e57ead15fc5d0"},
 ]
 
 [package.dependencies]
+anyio = "*"
 certifi = "*"
-httpcore = ">=0.18.0,<0.19.0"
+httpcore = "*"
 idna = "*"
 sniffio = "*"
 socksio = {version = "==1.*", optional = true, markers = "extra == \"socks\""}
@@ -367,13 +368,13 @@ virtualenv = ">=20.10.0"
 
 [[package]]
 name = "pyright"
-version = "1.1.333"
+version = "1.1.334"
 description = "Command line wrapper for pyright"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "pyright-1.1.333-py3-none-any.whl", hash = "sha256:f0a7b7b0cac11c396b17ef3cf6c8527aca1269edaf5cf8203eed7d6dd1ef52aa"},
-    {file = "pyright-1.1.333.tar.gz", hash = "sha256:1c49b0029048120c4378f3baf6c1dcbbfb221678bb69654fe773c514430ac53c"},
+    {file = "pyright-1.1.334-py3-none-any.whl", hash = "sha256:dcb13e8358e021189672c4d6ebcad192ab061e4c7225036973ec493183c6da68"},
+    {file = "pyright-1.1.334.tar.gz", hash = "sha256:3adaf10f1f4209575dc022f9c897f7ef024639b7ea5b3cbe49302147e6949cd4"},
 ]
 
 [package.dependencies]
