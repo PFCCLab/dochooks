@@ -1,4 +1,4 @@
-name: Unit Test
+name: Lint and Format
 
 on:
   push:
@@ -8,16 +8,21 @@ on:
   workflow_dispatch:
 
 jobs:
-  unit-test:
+  lint-and-fmt:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+        # Only run linter and formatter on minimum supported Python version
+        python-version: ["3.8"]
         architecture: ["x64"]
-    name: unittest - Python ${{ matrix.python-version }} on ${{ matrix.architecture }}
+    name: lint and fmt - Python ${{ matrix.python-version }} on ${{ matrix.architecture }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Install prettier
+        run: |
+          npm install -g prettier
 
       - name: Install poetry
         run: pipx install poetry
@@ -38,6 +43,10 @@ jobs:
         run: |
           just ci-install
 
-      - name: unit test
+      - name: lint
         run: |
-          just ci-test
+          just ci-lint
+
+      - name: format check
+        run: |
+          just ci-fmt-check
