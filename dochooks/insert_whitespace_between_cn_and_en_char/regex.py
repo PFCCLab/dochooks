@@ -1,9 +1,7 @@
 from __future__ import annotations
 
 import re
-from typing import Pattern
-
-from .._compat import Final
+from typing import Final, Pattern
 
 REGEX_CN_CHAR_STR: Final[str] = r"[\u4e00-\u9fa5]"
 REGEX_EN_CHAR_STR: Final[str] = r"[a-zA-Z0-9]"

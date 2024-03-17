@@ -12,13 +12,13 @@ httpx = "^0.27.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.0.0"
-black = "^24.0.0"
-isort = "^5.12.0"
 tomli = { version = "^2.0.1", python = "<3.11" }
 pre-commit = "^3.0.0"
 types-docutils = "^0.19.0"
 httpx = { extras = ["socks"], version = "^0.27.0" }
-pyright = "^1.1.262"
+pyright = "^1.1.354"
+ruff = "^0.3.3"
+pytest-rerunfailures = "^14.0"
 
 [tool.poetry.extras]
 rst-parser = ["docutils"]
@@ -28,13 +28,43 @@ check-whitespace-between-cn-and-en-char = "dochooks.insert_whitespace_between_cn
 insert-whitespace-between-cn-and-en-char = "dochooks.insert_whitespace_between_cn_and_en_char.format:main"
 api-doc-checker = "dochooks.api_doc_checker.check:main"
 
-[tool.black]
-line-length = 120
+[tool.pyright]
+include = ["dochooks", "tests"]
+pythonVersion = "3.8"
+typeCheckingMode = "strict"
 
-[tool.isort]
-profile = "black"
-add_imports = ["from __future__ import annotations"]
-skip = ["setup.py", ".venv"]
+[tool.ruff]
+line-length = 120
+target-version = "py38"
+
+[tool.ruff.lint]
+select = [
+  # Pyflakes
+  "F",
+  # Pycodestyle
+  "E",
+  "W",
+  # Isort
+  "I",
+  # Pyupgrade
+  "UP",
+  # Flake8-pyi
+  "PYI",
+  # Yesqa
+  "RUF100",
+]
+ignore = [
+  "E501", # line too long, duplicate with ruff fmt
+  "F401", # imported but unused, duplicate with pyright
+  "F841", # local variable is assigned to but never used, duplicate with pyright
+]
+
+[tool.ruff.lint.isort]
+required-imports = ["from __future__ import annotations"]
+known-first-party = ["moelib"]
+
+[tool.ruff.lint.per-file-ignores]
+"setup.py" = ["I"]
 
 [build-system]
 requires = ["poetry-core>=1.1.0"]
