@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import re
 from pathlib import Path
-from typing import Optional
 
 import docutils.nodes
 import httpx
@@ -15,7 +14,7 @@ REGEX_HTTP_LINK = re.compile(r"^https?://")
 
 
 class DeadLinkChecker(Checker):
-    _links: list[tuple[Optional[int], str]] = []
+    _links: list[tuple[int | None, str]] = []
 
     def visit_reference(self, node: docutils.nodes.Element):
         uri = node.get("refuri")

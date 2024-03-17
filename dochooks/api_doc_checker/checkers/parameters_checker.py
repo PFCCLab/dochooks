@@ -1,11 +1,10 @@
 from __future__ import annotations
 
 import re
-from typing import Optional
+from typing import Literal, TypedDict
 
 import docutils.nodes
 
-from ..._compat import Literal, TypedDict
 from ..utils import PATTERN_IDENTIFIER, is_valid_identifier
 from .checker import Checker, assert_is_element
 
@@ -14,11 +13,11 @@ APIType = Literal["class", "function", ""]
 
 class APIParameter(TypedDict):
     name: str
-    type: Optional[str]
+    type: str | None
     is_rest: bool
     is_keyword: bool
     optional: bool
-    default: Optional[str]
+    default: str | None
 
 
 class ParametersChecker(Checker):
@@ -34,8 +33,8 @@ class ParametersChecker(Checker):
 
     _check_result = True
     _section_name_stack: list[str] = []
-    _api_type: Optional[APIType] = None
-    _api_name: Optional[str] = None
+    _api_type: APIType | None = None
+    _api_name: str | None = None
     _api_parameters: list[APIParameter]
 
     # TODO: 直接抽取函数声明来检查
@@ -82,7 +81,7 @@ class ParametersChecker(Checker):
     def depart_section(self, node: docutils.nodes.Element):
         self._section_name_stack.pop()
 
-    def _extract_parameter_info_from_list_item(self, node: docutils.nodes.Element) -> Optional[APIParameter]:
+    def _extract_parameter_info_from_list_item(self, node: docutils.nodes.Element) -> APIParameter | None:
         """对单行信息进行提取并检查"""
 
         doc_parameter: APIParameter = APIParameter(
@@ -203,10 +202,10 @@ class ParametersChecker(Checker):
         return self._check_result
 
 
-def parse_api_name_and_parameters(api_declaration: str) -> tuple[Optional[str], list[APIParameter]]:
+def parse_api_name_and_parameters(api_declaration: str) -> tuple[str | None, list[APIParameter]]:
     """解析 API 声明的名称和参数"""
 
-    api_name: Optional[str] = None
+    api_name: str | None = None
     api_parameters: list[APIParameter] = []
 
     api_declaration = api_declaration.strip()

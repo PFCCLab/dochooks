@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import re
-from typing import Optional
 
 import pytest
 
@@ -107,9 +106,7 @@ def test_pattern_doc_parameter_type():
         ),
     ],
 )
-def test_parse_api_name_and_parameters(
-    api_declaration: str, api_name: Optional[str], api_parameters: list[APIParameter]
-):
+def test_parse_api_name_and_parameters(api_declaration: str, api_name: str | None, api_parameters: list[APIParameter]):
     api_name_actual, api_parameters_actual = parse_api_name_and_parameters(api_declaration)
     assert api_name == api_name_actual
     assert api_parameters == api_parameters_actual

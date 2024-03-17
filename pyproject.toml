@@ -27,6 +27,11 @@ check-whitespace-between-cn-and-en-char = "dochooks.insert_whitespace_between_cn
 insert-whitespace-between-cn-and-en-char = "dochooks.insert_whitespace_between_cn_and_en_char.format:main"
 api-doc-checker = "dochooks.api_doc_checker.check:main"
 
+[tool.pyright]
+include = ["dochooks", "tests"]
+pythonVersion = "3.8"
+typeCheckingMode = "strict"
+
 [tool.ruff]
 line-length = 120
 target-version = "py38"
@@ -44,8 +49,6 @@ select = [
   "UP",
   # Flake8-pyi
   "PYI",
-  # Flake8-use-pathlib
-  "PTH",
   # Yesqa
   "RUF100",
 ]

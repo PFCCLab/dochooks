@@ -9,10 +9,9 @@ refs:
 - [The Docutils Document Tree](https://docutils.sourceforge.io/docs/ref/doctree.html)
 """
 
-
 from __future__ import annotations
 
-from typing import Any, Callable, Optional
+from typing import TYPE_CHECKING, Any, Callable, Optional
 
 import docutils
 import docutils.nodes
@@ -112,18 +111,19 @@ SPHINX_DOMAIN_ROLES = [
 # https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html
 SPHINX_EXT_AUTODOC_ROLES: list[str] = []
 
-RoleFn = Callable[
-    [
-        str,
-        str,
-        str,
-        int,
-        docutils.parsers.rst.states.Inliner,
-        Optional[dict[str, Any]],
-        Optional[list[str]],
-    ],
-    tuple[list[Any], list[Any]],
-]
+if TYPE_CHECKING:
+    RoleFn = Callable[
+        [
+            str,
+            str,
+            str,
+            int,
+            docutils.parsers.rst.states.Inliner,
+            Optional[dict[str, Any]],  # type: ignore
+            Optional[list[str]],  # type: ignore
+        ],
+        tuple[list[Any], list[Any]],  # type: ignore
+    ]
 
 
 def _ignore_role(
@@ -132,8 +132,8 @@ def _ignore_role(
     text: str,
     lineno: int,
     inliner: docutils.parsers.rst.states.Inliner,
-    options: Optional[dict[str, Any]] = None,
-    content: Optional[list[str]] = None,
+    options: dict[str, Any] | None = None,
+    content: list[str] | None = None,
 ) -> tuple[list[Any], list[Any]]:
     """Stub for unknown roles."""
     print("name:", name)
@@ -159,8 +159,8 @@ def create_custom_role(
         text: str,
         lineno: int,
         inliner: docutils.parsers.rst.states.Inliner,
-        options: Optional[dict[str, Any]] = None,
-        content: Optional[list[str]] = None,
+        options: dict[str, Any] | None = None,
+        content: list[str] | None = None,
     ) -> tuple[list[Any], list[Any]]:
         node = docutils.nodes.literal(
             rawsource=rawtext,
