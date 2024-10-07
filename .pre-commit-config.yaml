@@ -1,12 +1,12 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.3.0
+    rev: v5.0.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
       - id: check-yaml
   - repo: https://github.com/ShigureLab/dochooks
-    rev: df3d6a3e8f2d0714fb475fbee5cb1d1250d51742
+    rev: v0.3.0
     hooks:
       - id: check-whitespace-between-cn-and-en-char
         files: \.md$|\.rst$
