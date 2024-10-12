@@ -11,7 +11,7 @@ typing-extensions = "^4.3.0"
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.0.0"
 tomli = { version = "^2.0.1", python = "<3.11" }
-pre-commit = "^3.0.0"
+pre-commit = "^4.0.0"
 pyright = "^1.1.384"
 ruff = "^0.6.8"
 pytest-rerunfailures = "^14.0"
