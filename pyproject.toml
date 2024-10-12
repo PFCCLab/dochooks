@@ -1,24 +1,46 @@
-[tool.poetry]
+[project]
 name = "dochooks"
 version = "0.3.0"
 description = ""
-authors = ["Nyakku Shigure <sigure.qaq@gmail.com>"]
+readme = "README.md"
+requires-python = ">=3.8"
+authors = [{ name = "Nyakku Shigure", email = "sigure.qaq@gmail.com" }]
+keywords = []
+license = { text = "MIT" }
+classifiers = [
+  "Operating System :: OS Independent",
+  "License :: OSI Approved :: MIT License",
+  "Typing :: Typed",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: Implementation :: CPython",
+]
+dependencies = ["typing-extensions>=4.3.0"]
 
-[tool.poetry.dependencies]
-python = "^3.8"
-typing-extensions = "^4.3.0"
+[project.urls]
+Homepage = "https://github.com/PFCCLab/dochooks"
+Documentation = "https://github.com/PFCCLab/dochooks"
+Repository = "https://github.com/PFCCLab/dochooks"
+Issues = "https://github.com/PFCCLab/dochooks/issues"
 
-[tool.poetry.group.dev.dependencies]
-pytest = "^8.0.0"
-tomli = { version = "^2.0.1", python = "<3.11" }
-pre-commit = "^3.0.0"
-pyright = "^1.1.384"
-ruff = "^0.6.8"
-pytest-rerunfailures = "^14.0"
-
-[tool.poetry.scripts]
+[project.scripts]
 check-whitespace-between-cn-and-en-char = "dochooks.insert_whitespace_between_cn_and_en_char.check:main"
 insert-whitespace-between-cn-and-en-char = "dochooks.insert_whitespace_between_cn_and_en_char.format:main"
+
+[tool.uv]
+dev-dependencies = [
+  "pytest>=8.3.3",
+  "tomli>=2.0.2; python_version < '3.11'",
+  "pyright>=1.1.384",
+  "pytest-rerunfailures>=14.0",
+  "ruff>=0.6.9",
+  "pre-commit>=3.5.0",
+]
 
 [tool.pyright]
 include = ["dochooks", "tests"]
@@ -54,10 +76,8 @@ ignore = [
 [tool.ruff.lint.isort]
 required-imports = ["from __future__ import annotations"]
 known-first-party = ["dochooks"]
-
-[tool.ruff.lint.per-file-ignores]
-"setup.py" = ["I"]
+combine-as-imports = true
 
 [build-system]
-requires = ["poetry-core>=1.1.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
