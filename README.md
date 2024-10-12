@@ -21,9 +21,6 @@ repos:
           files: \.md$|\.rst$
         - id: insert-whitespace-between-cn-and-en-char
           files: \.md$|\.rst$
-        - id: api-doc-checker
-          files: (?<!index)\.rst$
-          additional_dependencies: [".[rst-parser]"]
 ```
 
 ## Hooks
@@ -35,12 +32,3 @@ repos:
 ### `insert-whitespace-between-cn-and-en-char`
 
 用于自动在中英文之间添加空格
-
-### `api-doc-checker` <sup>WIP</sup>
-
-用于检查 API 文档（reStructureText）格式，需根据规范编写
-
-## TODOs
-
--  通过 option 的方式设置各个功能的等级，有些实验性功能可以设置为「仅警告」
--  部分 Element 无法获得 lineno

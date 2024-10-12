@@ -10,9 +10,3 @@
   entry: insert-whitespace-between-cn-and-en-char
   language: python
   types: [text]
-- id: api-doc-checker
-  name: API doc checker
-  description: Check API docs.
-  entry: api-doc-checker
-  language: python
-  types: [rst]

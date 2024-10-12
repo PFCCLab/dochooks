@@ -12,6 +12,3 @@ repos:
         files: \.md$|\.rst$
       - id: insert-whitespace-between-cn-and-en-char
         files: \.md$|\.rst$
-      - id: api-doc-checker
-        files: (?<!index)\.rst$
-        additional_dependencies: [".[rst-parser]"]
