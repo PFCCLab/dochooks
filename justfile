@@ -1,29 +1,28 @@
-VERSION := `poetry run python -c "import sys; from dochooks import __version__ as version; sys.stdout.write(version)"`
+VERSION := `uv run python -c "import sys; from dochooks import __version__ as version; sys.stdout.write(version)"`
 
 install:
-  poetry install -E rst-parser
+  uv sync --all-extras --dev
 
 test:
-  poetry run pytest
+  uv run pytest
   just clean
 
 fmt:
-  poetry run ruff format .
+  uv run ruff format .
 
 lint:
-  poetry run pyright dochooks tests
-  poetry run ruff check .
+  uv run pyright dochooks tests
+  uv run ruff check .
 
 fmt-docs:
   prettier --write '**/*.md'
 
 build:
-  poetry build
+  uv build
 
 publish:
-  touch dochooks/py.typed
-  poetry publish --build
-  git tag "v{{VERSION}}"
+  uv build
+  uv publish
   git push --tags
   just clean-builds
 
@@ -39,18 +38,18 @@ clean-builds:
   rm -rf *.egg-info/
 
 hooks-update:
-  poetry run pre-commit autoupdate
+  uv run pre-commit autoupdate
 
 ci-install:
-  poetry install --no-interaction --no-root -E rst-parser
+  just install
 
 ci-fmt-check:
-  poetry run ruff format --check --diff .
+  uv run ruff format --check --diff .
   prettier --check '**/*.md'
 
 ci-lint:
   just lint
 
 ci-test:
-  poetry run pytest --reruns 3 --reruns-delay 1
+  uv run pytest --reruns 3 --reruns-delay 1
   just clean
