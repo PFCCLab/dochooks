@@ -6,6 +6,7 @@ from typing import Sequence
 from dochooks import __version__
 
 from ..utils.return_code import FAIL, PASS, ReturnCode
+from .pragma import PragmaManager
 from .regex import REGEX_CN_WITH_EN, REGEX_EN_WITH_CN
 
 
@@ -17,11 +18,15 @@ def check(string: str) -> bool:
 
 def _check_file(file_path: str) -> ReturnCode:
     return_code = PASS
+    pragma_manager = PragmaManager()
     with open(file_path, encoding="utf8", newline="\n") as f:
         for lineno, line in enumerate(f, 1):
-            if not check(line):
-                print(f"No spaces between EN and CN chars detected at: {file_path}:{lineno}:\t{line}")
-                return_code = FAIL
+            with pragma_manager.scan(line) as skip_line:
+                if skip_line:
+                    continue
+                if not check(line):
+                    print(f"No spaces between EN and CN chars detected at: {file_path}:{lineno}:\t{line}")
+                    return_code = FAIL
     return return_code
 
 
