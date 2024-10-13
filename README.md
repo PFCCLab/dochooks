@@ -37,3 +37,14 @@ repos:
 ### `insert-whitespace-between-cn-and-en-char`
 
 用于自动在中英文之间添加空格
+
+## Pragma
+
+dochooks 支持 `dochooks: skip-next-line` 和 `dochooks: skip-line` 两种 pragma
+
+<!-- prettier-ignore -->
+```markdown
+<!-- dochooks: skip-next-line -->
+这是一段中文and English混合的text
+这是一段中文and English混合的text  <!-- dochooks: skip-line -->
+```

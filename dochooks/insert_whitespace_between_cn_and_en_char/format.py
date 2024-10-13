@@ -7,6 +7,7 @@ from dochooks import __version__
 
 from ..utils.return_code import FAIL, PASS, ReturnCode
 from .check import check
+from .pragma import PragmaManager
 from .regex import REGEX_CN_WITH_EN, REGEX_EN_WITH_CN
 
 
@@ -18,14 +19,19 @@ def format(text: str) -> str:
 
 def _format_file(file_path: str) -> ReturnCode:
     return_code = PASS
+    pragma_manager = PragmaManager()
     formatted_text = ""
     with open(file_path, encoding="utf8", newline="\n") as f:
         for lineno, line in enumerate(f, 1):
-            if not check(line):
-                line = format(line)
-                return_code = FAIL
-                print(f"Add spaces between EN and CN chars in: {file_path}:{lineno}:\t{line}")
-            formatted_text += line
+            with pragma_manager.scan(line) as skip_line:
+                if skip_line:
+                    formatted_text += line
+                    continue
+                if not check(line):
+                    line = format(line)
+                    return_code = FAIL
+                    print(f"Add spaces between EN and CN chars in: {file_path}:{lineno}:\t{line}")
+                formatted_text += line
     if return_code != PASS:
         with open(file_path, "w", encoding="utf8", newline="\n") as f:
             f.write(formatted_text)
