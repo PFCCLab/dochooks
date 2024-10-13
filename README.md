@@ -40,7 +40,7 @@ repos:
 
 ## Pragma
 
-dochooks 支持 `dochooks: skip-next-line` 和 `dochooks: skip-file` 两种 pragma
+dochooks 支持 `dochooks: skip-next-line` 和 `dochooks: skip-line` 两种 pragma
 
 <!-- prettier-ignore -->
 ```markdown
