@@ -3,7 +3,7 @@ name = "dochooks"
 version = "0.5.0"
 description = ""
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 authors = [{ name = "Nyakku Shigure", email = "sigure.qaq@gmail.com" }]
 keywords = []
 license = { text = "MIT" }
@@ -44,12 +44,12 @@ dev-dependencies = [
 
 [tool.pyright]
 include = ["dochooks", "tests"]
-pythonVersion = "3.8"
+pythonVersion = "3.9"
 typeCheckingMode = "strict"
 
 [tool.ruff]
 line-length = 120
-target-version = "py38"
+target-version = "py39"
 
 [tool.ruff.lint]
 select = [
