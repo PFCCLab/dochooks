@@ -1,8 +1,7 @@
 from __future__ import annotations
 
 import argparse
-from collections.abc import Iterable
-from typing import Sequence
+from collections.abc import Iterable, Sequence
 
 from dochooks import __version__
 
