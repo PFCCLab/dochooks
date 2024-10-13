@@ -36,7 +36,7 @@ def _check_file(file_path: str) -> ReturnCode:
         need_format, diagnostics = check_lines(f)
     if need_format:
         for lineno, line in diagnostics:
-            print(f"No spaces between EN and CN chars detected at: {file_path}:{lineno}:\t{line}")
+            print(f"No spaces between EN and CN chars detected at: {file_path}:{lineno}:\t{line.strip()}")
     return FAIL if need_format else PASS
 
 

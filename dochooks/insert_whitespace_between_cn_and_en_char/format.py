@@ -44,7 +44,7 @@ def _format_file(file_path: str) -> ReturnCode:
         with open(file_path, "w", encoding="utf8", newline="\n") as f:
             f.write(formatted_text)
         for lineno, line in diagnostics:
-            print(f"Add spaces between EN and CN chars in: {file_path}:{lineno}:\t{line}")
+            print(f"Add spaces between EN and CN chars in: {file_path}:{lineno}:\t{line.strip()}")
     return FAIL if need_format else PASS
 
 
