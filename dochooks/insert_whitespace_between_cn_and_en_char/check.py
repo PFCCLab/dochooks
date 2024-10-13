@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+from collections.abc import Iterable
 from typing import Sequence
 
 from dochooks import __version__
@@ -16,18 +17,27 @@ def check(string: str) -> bool:
     return True
 
 
-def _check_file(file_path: str) -> ReturnCode:
-    return_code = PASS
+def check_lines(lines: Iterable[str]) -> tuple[bool, list[tuple[int, str]]]:
+    diagnostics: list[tuple[int, str]] = []
+    need_format = False
     pragma_manager = PragmaManager()
+    for lineno, line in enumerate(lines, 1):
+        with pragma_manager.scan(line) as skip_line:
+            if skip_line:
+                continue
+            if not check(line):
+                need_format = True
+                diagnostics.append((lineno, line))
+    return need_format, diagnostics
+
+
+def _check_file(file_path: str) -> ReturnCode:
     with open(file_path, encoding="utf8", newline="\n") as f:
-        for lineno, line in enumerate(f, 1):
-            with pragma_manager.scan(line) as skip_line:
-                if skip_line:
-                    continue
-                if not check(line):
-                    print(f"No spaces between EN and CN chars detected at: {file_path}:{lineno}:\t{line}")
-                    return_code = FAIL
-    return return_code
+        need_format, diagnostics = check_lines(f)
+    if need_format:
+        for lineno, line in diagnostics:
+            print(f"No spaces between EN and CN chars detected at: {file_path}:{lineno}:\t{line.strip()}")
+    return FAIL if need_format else PASS
 
 
 def main(argv: Sequence[str] | None = None) -> ReturnCode:

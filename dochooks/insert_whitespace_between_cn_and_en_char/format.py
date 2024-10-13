@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+from collections.abc import Iterable
 from typing import Sequence
 
 from dochooks import __version__
@@ -17,25 +18,34 @@ def format(text: str) -> str:
     return text
 
 
-def _format_file(file_path: str) -> ReturnCode:
-    return_code = PASS
+def format_lines(lines: Iterable[str]) -> tuple[bool, str, list[tuple[int, str]]]:
+    formatted_text: str = ""
+    diagnostics: list[tuple[int, str]] = []
+    need_format = False
     pragma_manager = PragmaManager()
-    formatted_text = ""
-    with open(file_path, encoding="utf8", newline="\n") as f:
-        for lineno, line in enumerate(f, 1):
-            with pragma_manager.scan(line) as skip_line:
-                if skip_line:
-                    formatted_text += line
-                    continue
-                if not check(line):
-                    line = format(line)
-                    return_code = FAIL
-                    print(f"Add spaces between EN and CN chars in: {file_path}:{lineno}:\t{line}")
+    for lineno, line in enumerate(lines, 1):
+        with pragma_manager.scan(line) as skip_line:
+            if skip_line:
                 formatted_text += line
-    if return_code != PASS:
+                continue
+            if not check(line):
+                line = format(line)
+                need_format = True
+                diagnostics.append((lineno, line))
+            formatted_text += line
+    return need_format, formatted_text, diagnostics
+
+
+def _format_file(file_path: str) -> ReturnCode:
+    with open(file_path, encoding="utf8", newline="\n") as f:
+        need_format, formatted_text, diagnostics = format_lines(f)
+
+    if formatted_text:
         with open(file_path, "w", encoding="utf8", newline="\n") as f:
             f.write(formatted_text)
-    return return_code
+        for lineno, line in diagnostics:
+            print(f"Add spaces between EN and CN chars in: {file_path}:{lineno}:\t{line.strip()}")
+    return FAIL if need_format else PASS
 
 
 def main(argv: Sequence[str] | None = None) -> ReturnCode:
