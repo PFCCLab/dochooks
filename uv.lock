@@ -51,7 +51,7 @@ requires-dist = [{ name = "typing-extensions", specifier = ">=4.3.0" }]
 
 [package.metadata.dependency-groups]
 dev = [
-    { name = "pre-commit", specifier = ">=3.5.0" },
+    { name = "pre-commit", specifier = ">=4.0.1" },
     { name = "pyright", specifier = ">=1.1.386" },
     { name = "pytest", specifier = ">=8.3.3" },
     { name = "pytest-rerunfailures", specifier = ">=14.0" },

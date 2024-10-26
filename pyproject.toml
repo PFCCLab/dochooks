@@ -39,7 +39,7 @@ dev = [
   "pytest>=8.3.3",
   "pytest-rerunfailures>=14.0",
   "tomli>=2.0.2; python_version < '3.11'",
-  "pre-commit>=3.5.0",
+  "pre-commit>=4.0.1",
 ]
 
 [tool.pyright]
