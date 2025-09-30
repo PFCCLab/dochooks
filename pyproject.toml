@@ -31,6 +31,7 @@ Issues = "https://github.com/PFCCLab/dochooks/issues"
 [project.scripts]
 check-whitespace-between-cn-and-en-char = "dochooks.insert_whitespace_between_cn_and_en_char.check:main"
 insert-whitespace-between-cn-and-en-char = "dochooks.insert_whitespace_between_cn_and_en_char.format:main"
+check-case-conflict = "dochooks.check_case_conflict.check:main"
 
 [dependency-groups]
 dev = [

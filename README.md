@@ -26,6 +26,7 @@ repos:
           files: \.md$|\.rst$
         - id: insert-whitespace-between-cn-and-en-char
           files: \.md$|\.rst$
+        - id: check-case-conflict
 ```
 
 ## Hooks
@@ -37,6 +38,17 @@ repos:
 ### `insert-whitespace-between-cn-and-en-char`
 
 用于自动在中英文之间添加空格
+
+### `check-case-conflict`
+
+用于检测在大小写不敏感文件系统（如 APFS、NTFS）上可能冲突的文件名例如仓库中已有 `file.txt`，新建 `File.txt` 时会发现冲突。
+
+自定义错误信息：
+
+```yaml
+- id: check-case-conflict
+  args: ['--error-message="错误：检测到大小写冲突！\n{conflicts}"']
+```
 
 ## Pragma
 
