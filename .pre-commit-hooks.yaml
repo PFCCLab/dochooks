@@ -10,3 +10,9 @@
   entry: insert-whitespace-between-cn-and-en-char
   language: python
   types: [text]
+- id: check-case-conflict
+  name: Case-insensitive filesystem conflict checker
+  description: Check for filename conflicts on case-insensitive filesystems (APFS, NTFS).
+  entry: check-case-conflict
+  language: python
+  pass_filenames: true
