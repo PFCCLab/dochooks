@@ -20,7 +20,7 @@ Some pre-commit hooks for docs.
 ```yaml
 repos:
    - repo: https://github.com/PFCCLab/dochooks
-     rev: v0.5.0
+     rev: v0.6.0
      hooks:
         - id: check-whitespace-between-cn-and-en-char
           files: \.md$|\.rst$
