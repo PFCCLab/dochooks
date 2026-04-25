@@ -35,18 +35,13 @@ check-case-conflict = "dochooks.check_case_conflict.check:main"
 
 [dependency-groups]
 dev = [
-  "pyright>=1.1.406",
   "ruff>=0.14.0",
   "pytest>=8.4.2",
   "pytest-rerunfailures>=16.0.1",
   "tomli>=2.0.2; python_version < '3.11'",
   "pre-commit>=4.3.0",
+  "ty>=0.0.32",
 ]
-
-[tool.pyright]
-include = ["dochooks", "tests"]
-pythonVersion = "3.10"
-typeCheckingMode = "strict"
 
 [tool.ruff]
 line-length = 120
@@ -70,8 +65,6 @@ select = [
 ]
 ignore = [
   "E501", # line too long, duplicate with ruff fmt
-  "F401", # imported but unused, duplicate with pyright
-  "F841", # local variable is assigned to but never used, duplicate with pyright
 ]
 
 [tool.ruff.lint.isort]

@@ -11,7 +11,7 @@ fmt:
   uv run ruff format .
 
 lint:
-  uv run pyright src/dochooks tests
+  uv run ty check --error-on-warning src/dochooks tests
   uv run ruff check .
 
 fmt-docs:
