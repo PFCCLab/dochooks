@@ -35,11 +35,11 @@ check-case-conflict = "dochooks.check_case_conflict.check:main"
 
 [dependency-groups]
 dev = [
-  "ty>=0.0.78",
-  "ruff>=0.16.6",
+  "ty>=0.0.85",
+  "ruff>=0.16.10",
   "pytest>=9.1.1",
-  "pytest-rerunfailures>=16.6.1",
-  "tomli>=2.4.1; python_version < '3.11'",
+  "pytest-rerunfailures>=16.7",
+  "tomli>=2.5.0; python_version < '3.11'",
   "pre-commit>=4.6.2",
 ]
 
